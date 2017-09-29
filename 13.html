@@ -12,6 +12,31 @@
             
             // Jou instructies volgen hier
             robotArm.speed = 500;
+
+            var last = false;
+
+            for(var i = 0; i < 9; i++) {
+                robotArm.grab();
+                var out = robotArm.scan();
+                last = false;
+                if(out != null) {
+                    while(!last) {
+                        robotArm.moveRight();
+                        robotArm.drop();
+                        robotArm.moveLeft();
+                        robotArm.grab();
+                        out = robotArm.scan();
+                        if(out == null) {
+                            robotArm.moveRight();
+                            robotArm.grab();
+                            robotArm.moveLeft();
+                            robotArm.drop();
+                            robotArm.moveRight();
+                            last = !last;
+                        }
+                    }
+                }
+            }
             
             // De door jou opgegeven instructies uitvoeren
             robotArm.run();

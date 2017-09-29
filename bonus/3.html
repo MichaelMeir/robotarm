@@ -1,0 +1,103 @@
+<html>
+    <body>
+        <canvas id="canvas" width="800" height="600"></canvas>
+        <script src="../robot-arm.js"></script>
+        <script>
+            // Robotarm bibliotheek inladen
+            var canvas = document.getElementById("canvas");
+            var robotArm = new RobotArm(canvas);
+            
+            // Het level inladen
+            robotArm.loadLevel("exercise 11");
+            
+            // Jou instructies volgen hier
+            robotArm.speed = 500;
+
+            var red = new Array();
+            var blue = new Array();
+            var white = new Array();
+            var green = new Array();
+
+            var current = 0;
+
+            for(var i = 0; i < 10; i++) {
+                robotArm.grab();
+                var out = robotArm.scan();
+                switch(out) {
+                    case "red":
+                        red.push(current);
+                        break;
+                    case "blue":
+                        blue.push(current);
+                        break;
+                    case "white":
+                        white.push(current);
+                        break;
+                    case "green":
+                        green.push(current);
+                        break;
+                }
+                robotArm.drop();
+                robotArm.moveRight();
+                current += 1;
+            }
+
+            robotArm.moveLeft();
+            current -= 1;
+
+            function most(type, which) {
+                if(red.length > blue.length && red.length > green.length && red.length > white.length) {
+                    if(type == "length") {
+                        return red.length;
+                    }else{
+                        return red[which];
+                    }
+                }
+                if(blue.length > red.length && blue.length > green.length && blue.length > white.length) {
+                    if(type == "length") {
+                        return blue.length;
+                    }else{
+                        return blue[which];
+                    }
+                }
+                if(green.length > blue.length && green.length > red.length && green.length > white.length) {
+                    if(type == "length") {
+                        return green.length;
+                    }else{
+                        return green[which];
+                    }
+                }
+                if(white.length > blue.length && white.length > green.length && white.length > red.length) {
+                    if(type == "length") {
+                        return white.length;
+                    }else{
+                        return white[which];
+                    }
+                }
+                if(type == "length") {
+                        return red.length;
+                    }else{
+                        return red[which];
+                }
+
+            }
+
+            for(var i = 0; i < most("length", 0); i++) {
+                for(var j = 0; j < (9 - most("", i)); j++) {
+                    robotArm.moveLeft();
+                }
+                robotArm.grab();
+                for(var j = 0; j < (9 - (9 - most("", i))); j++) {
+                    robotArm.moveLeft();
+                }
+                robotArm.drop();
+                for(var j = 0; j < 9; j++) {
+                    robotArm.moveRight();
+                }
+            }
+            
+            // De door jou opgegeven instructies uitvoeren
+            robotArm.run();
+        </script>
+    </body>
+</html>

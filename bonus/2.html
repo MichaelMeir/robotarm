@@ -1,0 +1,90 @@
+<html>
+    <body>
+        <canvas id="canvas" width="800" height="600"></canvas>
+        <script src="../robot-arm.js"></script>
+        <script>
+            // Robotarm bibliotheek inladen
+            var canvas = document.getElementById("canvas");
+            var robotArm = new RobotArm(canvas);
+            
+            // Het level inladen
+            robotArm.loadLevel("exercise 6");
+            
+            // Jou instructies volgen hier
+            robotArm.speed = 500;
+
+            var red, green, white, blue;
+            var current = 0;
+
+            for(var i = 0; i < 9; i++) {
+                robotArm.grab();
+                var out = robotArm.scan();
+                
+                switch(out) {
+                    case "white":
+                        if(white == null) {
+                            white = current;
+                            robotArm.drop();
+                        }else{
+                            for(var j = 0; j < (current - white); j++) {
+                                robotArm.moveLeft();
+                            }
+                            robotArm.drop();
+                            for(var j = 0; j < (current - white); j++) {
+                                robotArm.moveRight();
+                            }
+                        }
+                        break;
+                    case "blue":
+                        if(blue == null) {
+                            blue = current;
+                            robotArm.drop();
+                        }else{
+                            for(var j = 0; j < (current - blue); j++) {
+                                robotArm.moveLeft();
+                            }
+                            robotArm.drop();
+                            for(var j = 0; j < (current - blue); j++) {
+                                robotArm.moveRight();
+                            }
+                        }
+                        break;
+                    case "green":
+                        if(green == null) {
+                            green = current;
+                            robotArm.drop();
+                        }else{
+                            for(var j = 0; j < (current - green); j++) {
+                                robotArm.moveLeft();
+                            }
+                            robotArm.drop();
+                            for(var j = 0; j < (current - green); j++) {
+                                robotArm.moveRight();
+                            }
+                        }
+                        break;
+                    case "red":
+                        if(red == null) {
+                            red = current;
+                            robotArm.drop();
+                        }else{
+                            for(var j = 0; j < (current - red); j++) {
+                                robotArm.moveLeft();
+                            }
+                            robotArm.drop();
+                            for(var j = 0; j < (current - red); j++) {
+                                robotArm.moveRight();
+                            }
+                        }
+                        break;
+                }
+
+                robotArm.moveRight();
+                current += 1;
+            }
+            
+            // De door jou opgegeven instructies uitvoeren
+            robotArm.run();
+        </script>
+    </body>
+</html>

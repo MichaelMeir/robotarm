@@ -1,32 +1,29 @@
 <html>
     <body>
         <canvas id="canvas" width="800" height="600"></canvas>
-        <script src="./robot-arm.js"></script>
+        <script src="../robot-arm.js"></script>
         <script>
             // Robotarm bibliotheek inladen
             var canvas = document.getElementById("canvas");
             var robotArm = new RobotArm(canvas);
             
             // Het level inladen
-            robotArm.loadLevel("exercise 9");
+            robotArm.loadLevel("exercise 3");
             
             // Jou instructies volgen hier
             robotArm.speed = 500;
 
-            var cubes = 1;
+            var current = 1;
             for(var i = 0; i < 4; i++) {
-                for(var j = 0; j < cubes; j++) {
-                    robotArm.grab();
-                    for(var k = 0; k < 5; k++) {
-                        robotArm.moveRight();
-                    }
-                    robotArm.drop();
-                    for(var k = 0; k < 5; k++) {
-                        robotArm.moveLeft();
-                    }
+                robotArm.grab();
+                for(var j = 0; j < (8/4)*current; j++) {
+                    robotArm.moveRight();
                 }
-                cubes += 1;
-                robotArm.moveRight();
+                robotArm.drop();
+                for(var j = 0; j < (8/4)*current; j++) {
+                    robotArm.moveLeft();
+                }
+                current += 1;
             }
             
             // De door jou opgegeven instructies uitvoeren
