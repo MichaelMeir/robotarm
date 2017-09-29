@@ -8,11 +8,114 @@
             var robotArm = new RobotArm(canvas);
             
             // Het level inladen
-            robotArm.loadLevel("exercise 9");
+            robotArm.randomLevel(4);
             
             // Jou instructies volgen hier
+            robotArm.speed = 500;
 
-            
+            var row1 = 0, row2 = 0, row3 = 0, row4 = 0;
+            var empty = false;
+
+            while(!empty) {
+                robotArm.grab();
+                var out = robotArm.scan();
+                if(out == null) {
+                    empty = true;
+                    robotArm.moveRight();
+                    robotArm.moveRight();
+                    robotArm.moveRight();
+                }else{
+                    robotArm.moveRight();
+                    robotArm.moveRight();
+                    robotArm.drop();
+                    robotArm.moveLeft();
+                    robotArm.moveLeft();
+                    row1 += 1;
+                }
+            }
+
+            empty = false;
+
+            while(!empty) {
+                robotArm.grab();
+                var out = robotArm.scan();
+                if(out == null) {
+                    empty = true;
+                    robotArm.moveLeft();
+                }else{
+                    robotArm.moveLeft();
+                    robotArm.moveLeft();
+                    robotArm.drop();
+                    robotArm.moveRight();
+                    robotArm.moveRight();
+                    row4 += 1;
+                }
+            }
+
+            for(var i = 0; i < row1; i++) {
+                robotArm.grab();
+                robotArm.moveRight();
+                robotArm.drop();
+                robotArm.moveLeft();
+            }
+            robotArm.moveLeft();
+            for(var i = 0; i < row4; i++) {
+                robotArm.grab();
+                robotArm.moveLeft();
+                robotArm.drop();
+                robotArm.moveRight();
+            }
+
+            empty = false;
+
+            while(!empty) {
+                robotArm.grab();
+                var out = robotArm.scan();
+                if(out == null) {
+                    empty = true;
+                }else{
+                    robotArm.moveRight();
+                    robotArm.moveRight();
+                    robotArm.drop();
+                    robotArm.moveLeft();
+                    robotArm.moveLeft();
+                    row2 += 1;
+                }
+            }
+
+            empty = false;
+            robotArm.moveRight();
+
+            while(!empty) {
+                robotArm.grab();
+                var out = robotArm.scan();
+                if(out == null) {
+                    empty = true;
+                }else{
+                    robotArm.moveLeft();
+                    robotArm.moveLeft();
+                    robotArm.drop();
+                    robotArm.moveRight();
+                    robotArm.moveRight();
+                    row3 += 1;
+                }
+            }
+
+            for(var i = 0; i < row2; i++) {
+                robotArm.moveRight();
+                robotArm.grab();
+                robotArm.moveLeft();
+                robotArm.drop();
+            }
+
+            robotArm.moveLeft();
+
+            for(var i = 0; i < row3; i++) {
+                robotArm.moveLeft();
+                robotArm.grab();
+                robotArm.moveRight();
+                robotArm.drop();
+            }
 
             // De door jou opgegeven instructies uitvoeren
             robotArm.run();

@@ -13,29 +13,26 @@
             // Jou instructies volgen hier
             robotArm.speed = 500;
 
-            var last = false;
+            var empty = false;
 
-            for(var i = 0; i < 9; i++) {
-                robotArm.grab();
-                var out = robotArm.scan();
-                last = false;
-                if(out != null) {
-                    while(!last) {
-                        robotArm.moveRight();
-                        robotArm.drop();
-                        robotArm.moveLeft();
-                        robotArm.grab();
-                        out = robotArm.scan();
-                        if(out == null) {
+            for(var i = 0; i < 5; i++) {
+                while(!empty) {
+                    robotArm.grab();
+                    var out = robotArm.scan();
+                    if(out != null) {
+                        for(var j = 0; j < 5; j++) {
                             robotArm.moveRight();
-                            robotArm.grab();
-                            robotArm.moveLeft();
-                            robotArm.drop();
-                            robotArm.moveRight();
-                            last = !last;
                         }
+                        robotArm.drop();
+                        for(var j = 0; j < 5; j++) {
+                            robotArm.moveLeft();
+                        }
+                    }else{
+                        empty = true;
                     }
                 }
+                empty = false;
+                robotArm.moveRight();
             }
             
             // De door jou opgegeven instructies uitvoeren
