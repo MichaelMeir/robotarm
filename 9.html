@@ -13,9 +13,8 @@
             // Jou instructies volgen hier
             robotArm.speed = 500;
 
-            var cubes = 1;
-            for(var i = 0; i < 4; i++) {
-                for(var j = 0; j < cubes; j++) {
+            for(var i = 1; i < 5; i++) {
+                for(var j = 0; j < i; j++) {
                     robotArm.grab();
                     for(var k = 0; k < 5; k++) {
                         robotArm.moveRight();
@@ -25,7 +24,6 @@
                         robotArm.moveLeft();
                     }
                 }
-                cubes += 1;
                 robotArm.moveRight();
             }
             
